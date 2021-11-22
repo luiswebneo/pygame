@@ -7,6 +7,11 @@
     <div class="hero">
         <div class="hero-body">
             <section class="section">
+                {% if post.image %}
+                <figure class="image mb-6">
+                    <img src="{{ post.image.url }}">
+                </figure>
+                {% endif %}
                 <div class="column is-8 is-offset-2">
                     <div class="content is-medium">
                         <h2 class="subtitle is-4">{{ post.created_at|timesince }} ago</h2>
@@ -14,6 +19,8 @@
                         <p><strong>{{ post.intro }}</strong></p>
                         <p>{{ post.body }}</p>
 
+                        <p><small>Category: <a href="{% url 'category_detail' post.category.slug %}">{{ post.category }}</a></small></p>
+        
                         <hr>
 
                         <h2 class="subtitle is-4">Comments</h2>
@@ -31,12 +38,13 @@
                         </form>
 
                         {% for comment in post.comments.all %}
-                            <article class="media box">
-                                <div class="media-content">
-                                    <strong>{{ comment.name }}</strong> <small>{{ comment.created_at|timesince }} out</small>
-                                    {{ comment.body }}
-                                </div>
-                            </article>
+                        <article class="media box">
+                            <div class="media-content">
+                                <strong>{{ comment.name }}</strong> <small>{{ comment.created_at|timesince }}
+                                    out</small>
+                                {{ comment.body }}
+                            </div>
+                        </article>
                         {% endfor %}
                     </div>
                 </div>
